@@ -1,0 +1,11 @@
+dist/
+build/
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+.idea/
+.env
+.env.*
+*.ipk
+app/devmode.json
