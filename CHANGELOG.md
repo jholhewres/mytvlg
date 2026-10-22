@@ -6,6 +6,8 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-22
+
 ### Added
 - New home screen design: hero with backdrops, app tiles, media rows, weather sheet, screensaver.
 - App and HDMI discovery through the TV's SSAP API after a one-time pairing.
@@ -20,3 +22,6 @@ All notable changes are documented here. The format follows
 
 ### Changed
 - Forked from FreeMyTvWebOS 1.2.2 under a new app ID (`io.github.jholhewres.mytvlg`).
+
+[Unreleased]: https://github.com/jholhewres/mytvlg/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/jholhewres/mytvlg/releases/tag/v0.1.0
