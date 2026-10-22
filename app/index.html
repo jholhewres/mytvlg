@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>MyTVLG</title>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="webOSTV.js"></script>
+</head>
+<body data-tod="night">
+    <div class="backdrop" aria-hidden="true">
+        <div class="ambient"></div>
+        <div class="backdrop-image" id="backdropA"></div>
+        <div class="backdrop-image" id="backdropB"></div>
+        <div class="backdrop-scrim"></div>
+    </div>
+
+    <header class="topbar">
+        <div class="brand">
+            <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#8f7bff"/>
+                        <stop offset="1" stop-color="#ff6f9f"/>
+                    </linearGradient>
+                </defs>
+                <rect width="64" height="64" rx="18" fill="url(#brandGradient)"/>
+                <rect x="13" y="16" width="38" height="27" rx="7" fill="none" stroke="#fff" stroke-width="4"/>
+                <path d="M23 43a9 9 0 0 1 18 0z" fill="#fff"/>
+                <path d="M25 50h14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <span class="brand-name"><b>MyTV</b><span>LG</span></span>
+        </div>
+        <div class="topbar-right">
+            <button class="search-chip focusable" id="searchButton" data-zone="top">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <span id="searchLabel"></span>
+            </button>
+            <button class="iptv-chip focusable" id="iptvButton" data-zone="top" hidden><span id="iptvLabel"></span></button>
+            <button class="kids-chip focusable" id="kidsButton" data-zone="top">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></svg>
+                <span id="kidsLabel"></span>
+            </button>
+            <button class="weather-chip focusable" id="weatherChip" data-zone="top">
+                <span class="weather-icon" id="weatherIcon"></span>
+                <span class="weather-temp" id="weatherTemp">--°</span>
+                <span class="weather-text">
+                    <span id="weatherCondition"></span>
+                    <span class="weather-city" id="weatherCity"></span>
+                </span>
+            </button>
+            <div class="clock">
+                <div class="clock-time" id="clockTime">--:--</div>
+                <div class="clock-date" id="clockDate"></div>
+            </div>
+            <button class="icon-button focusable" id="settingsButton" data-zone="top" data-i18n-label="settings">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="hero-eyebrow" id="heroEyebrow"></div>
+        <h1 class="hero-title" id="heroTitle"></h1>
+        <div class="hero-meta" id="heroMeta"></div>
+        <p class="hero-desc" id="heroDesc"></p>
+    </section>
+
+    <main class="rows-viewport">
+        <div class="rows" id="rows"></div>
+    </main>
+
+    <div class="hint-bar" id="hintBar" hidden></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="key-legend" id="keyLegend" hidden>
+        <span><i class="dot green"></i><b id="legendWatched"></b></span>
+        <span><i class="dot yellow"></i><b id="legendList"></b></span>
+    </div>
+
+    <aside class="sheet" id="settingsSheet" aria-modal="true" role="dialog">
+        <div class="sheet-scroll" id="settingsBody"></div>
+    </aside>
+
+    <aside class="sheet sheet-weather" id="weatherSheet" aria-modal="true" role="dialog">
+        <div class="sheet-scroll" id="weatherBody"></div>
+    </aside>
+
+    <section class="all-apps" id="allApps" aria-modal="true" role="dialog">
+        <div class="sheet-scroll all-apps-scroll">
+            <h2 id="allAppsTitle"></h2>
+            <div class="all-apps-grid" id="allAppsGrid"></div>
+        </div>
+    </section>
+
+    <section class="all-apps browse" id="search" aria-modal="true" role="dialog">
+        <div class="sheet-scroll all-apps-scroll">
+            <button class="explore-hero focusable" id="exploreHero" hidden>
+                <div class="eh-bg" id="ehA"></div>
+                <div class="eh-bg" id="ehB"></div>
+                <div class="eh-scrim"></div>
+                <div class="eh-content">
+                    <div class="hero-eyebrow" id="ehEyebrow"></div>
+                    <div class="eh-title" id="ehTitle"></div>
+                    <div class="hero-meta" id="ehMeta"></div>
+                    <p class="eh-desc" id="ehDesc"></p>
+                    <div class="eh-dots" id="ehDots"></div>
+                </div>
+            </button>
+            <div class="search-box" id="searchBox">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <input class="search-input focusable" id="searchInput" type="text" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="filter-bar" id="filterBar"></div>
+            <div class="browse-head"><span class="browse-count" id="searchCount"></span></div>
+            <div class="browse-detail" id="searchDetail"></div>
+            <div class="browse-grid" id="searchGrid"></div>
+        </div>
+    </section>
+
+    <section class="all-apps kids" id="kids" aria-modal="true" role="dialog">
+        <div class="sheet-scroll all-apps-scroll" id="kidsBody"></div>
+    </section>
+
+    <section class="all-apps episodes" id="episodes" aria-modal="true" role="dialog">
+        <div class="sheet-scroll all-apps-scroll" id="episodesBody"></div>
+    </section>
+
+    <section class="detail" id="detail" aria-modal="true" role="dialog">
+        <div class="detail-panel sheet-scroll" id="detailBody"></div>
+    </section>
+
+    <section class="all-apps browse" id="channels" aria-modal="true" role="dialog">
+        <div class="sheet-scroll all-apps-scroll" id="channelsBody">
+            <div class="kids-head"><h2 id="channelsTitle"></h2><span class="browse-count" id="channelsCount"></span></div>
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <input class="search-input focusable" id="channelsInput" type="text" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="filter-bar" id="channelsFilters"></div>
+            <div class="channel-grid" id="channelsGrid"></div>
+        </div>
+    </section>
+
+    <section class="player" id="player" aria-modal="true" role="dialog">
+        <video id="playerVideo" playsinline></video>
+        <div class="player-ui" id="playerUi">
+            <div class="player-title" id="playerTitle"></div>
+            <div class="player-sub" id="playerSub"></div>
+            <div class="player-bar"><i id="playerProgress"></i></div>
+            <div class="player-times"><span id="playerTime">0:00</span><span id="playerDuration"></span></div>
+            <div class="player-hint" id="playerHint"></div>
+        </div>
+        <div class="player-state" id="playerState"></div>
+    </section>
+
+    <div class="screensaver" id="screensaver" aria-hidden="true">
+        <div class="screensaver-content" id="screensaverContent">
+            <div class="screensaver-time" id="screensaverTime"></div>
+            <div class="screensaver-date" id="screensaverDate"></div>
+            <div class="screensaver-weather" id="screensaverWeather"></div>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/tv.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

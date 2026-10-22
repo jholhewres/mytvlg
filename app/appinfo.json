@@ -1,0 +1,20 @@
+{
+  "id": "io.github.jholhewres.mytvlg",
+  "version": "0.1.0",
+  "vendor": "MyTVLG contributors",
+  "type": "web",
+  "main": "index.html",
+  "title": "MyTVLG",
+  "icon": "assets/icon.png",
+  "largeIcon": "assets/largeIcon.png",
+  "splashBackground": "assets/splash.png",
+  "iconColor": "#0a84ff",
+  "resolution": "1920x1080",
+  "handlesRelaunch": false,
+  "supportQuickStart": true,
+  "requiredPermissions": [
+    "applications",
+    "applications.launcher",
+    "system.notifications"
+  ]
+}
