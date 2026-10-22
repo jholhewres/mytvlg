@@ -16,5 +16,6 @@
     "applications",
     "applications.launcher",
     "system.notifications"
-  ]
+  ],
+  "disableBackHistoryAPI": true
 }

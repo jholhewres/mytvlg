@@ -2617,7 +2617,12 @@
         }
 
         if (state.reorder && back) { finishReorder(); e.preventDefault(); return; }
-        if (back) return;
+        if (back) {
+            // With disableBackHistoryAPI the app owns Back; on the home screen hand it to the system.
+            e.preventDefault();
+            if (window.webOS && typeof webOS.platformBack === 'function') webOS.platformBack();
+            return;
+        }
         if (dir) { moveMain(dir); e.preventDefault(); }
         else if (enter) {
             var el = focusedElement();
